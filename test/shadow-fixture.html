@@ -5,6 +5,15 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>px-popover Test Suite</title>
+
+        <script>
+          // Setup Polymer options
+          window.Polymer = {
+            dom: 'shadow',
+            lazyRegister: true,
+          };
+        </script>
+
         <script src="../bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
         <!-- web-component-tester automatically provides local copy of brower.js below
              for any URL ending with "/web-component-tester/browser.js"
@@ -35,161 +44,37 @@
     </head>
 
     <body>
-        <h3>PX-Popover Test Suite</h3>
-        <p>
-            Although related, examples are /not/ the same as the test fixtures.
-            Tests are tests, examples are examples.
-        </p>
-
-        <p>
-            Also see the <a href="../index.html">documentation</a> and the <a href="../demo.html">UI demo</a>.
-        </p>
 
         <p>
             Click button to invoke popover:
         </p>
 
         <div class="sample-container">
-            <button id="btnUp" type="button" name="button">Up</button>
-            <px-popover
-                id="testPopoverUp"
-                for="btnUp"
-                orientation="top"
-                popover-title="Top Popover"
-                popover-body="Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod.">
-            </px-popover>
 
-            <button id="btnDown" type="button" name="button">Down</button>
+            <button id="btnEnhanced" type="button" name="button">Enhanced</button>
             <px-popover
-                id="testPopoverDown"
-                for="btnDown"
+                id="testPopoverEnhanced"
+                enhanced
+                for="btnEnhanced"
                 orientation="bottom"
-                popover-title="Bottom Popover"
-                popover-body="Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod.">
-            </px-popover>
+                >
 
-            <button id="btnLeft" type="button" name="button">Left</button>
-            <px-popover
-                id="testPopoverLeft"
-                for="btnLeft"
-                orientation="left"
-                popover-title="Left Popover"
-                popover-body="Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod.">
-            </px-popover>
-
-            <button id="btnRight" type="button" name="button">Right</button>
-            <px-popover
-                id="testPopoverRight"
-                for="btnRight"
-                orientation="right"
-                popover-title="Right Popover"
-                popover-body="Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod.">
-            </px-popover>
-        </div>
-        <p></p>
-
-        <div class="sample-container">
-          <div style="position:relative">
-            <button id="btnUpRel" type="button" name="button">Up</button>
-            <px-popover
-                id="testPopoverUpRel"
-                for="btnUpRel"
-                orientation="top"
-                popover-title="Top Popover"
-                popover-body="Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod."
-                position="relative" >
-            </px-popover>
-          </div>
-          <div style="position:relative">
-            <button id="btnDownRel" type="button" name="button">Down</button>
-            <px-popover
-                id="testPopoverDownRel"
-                for="btnDownRel"
-                orientation="bottom"
-                popover-title="Bottom Popover"
-                popover-body="Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod."
-                position="relative" >
-            </px-popover>
-          </div>
-
-            <div style="position:relative">
-            <button id="btnLeftRel" type="button" name="button">Left</button>
-            <px-popover
-                id="testPopoverLeftRel"
-                for="btnLeftRel"
-                orientation="left"
-                popover-title="Left Popover"
-                popover-body="Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod."
-                position="relative" >
-            </px-popover>
-          </div>
-
-            <div style="position:relative">
-            <button id="btnRightRel" type="button" name="button">Right</button>
-            <px-popover
-                id="testPopoverRightRel"
-                for="btnRightRel"
-                orientation="right"
-                popover-title="Right Popover"
-                popover-body="Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod."
-                position="relative" >
-            </px-popover>
-          </div>
-        </div>
-        <p></p>
-
-        <div class="sample-container">
-            <button id="btnParent" type="button" name="button"><span id="btnChild">Nested Element</span></button>
-            <px-popover
-                id="testPopoverNested"
-                for="btnParent"
-                orientation="top"
-                popover-title="Popover initiated from nested child"
-                popover-body="Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod.">
+                <div>This is a form
+                  <form><input class='text-input' type='text' value='Input'></form>
+                </div>
             </px-popover>
         </div>
         <p></p>
 
         <script>
             suite('<px-popover>', function() {
-                var testPopoverUp = document.getElementById('testPopoverUp');
 
-                test('reflects the "for" property', function() {
-                    assert.equal(testPopoverUp.for, "btnUp");
-                });
-
-                test('reflects the "orientation" property', function() {
-                    assert.equal(testPopoverUp.orientation, "top");
-                });
-
-                test('reflects the "popover-title" property', function() {
-                    assert.equal(testPopoverUp.popoverTitle, "Top Popover");
-                });
-
-                test('reflects the "popover-body" property', function() {
-                    assert.equal(testPopoverUp.popoverBody, "Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod.");
-                });
-
-                test('hides popover before click', function() {
-                    var wrapper = document.querySelector('#testPopoverUp').$.popover__wrapper;
-                    expect(wrapper.classList.contains('fadeFromHidden')).to.equal(false);
-                });
-
-                test('shows popover after click', function() {
-                    document.querySelector('#btnUp').click();
-                    var wrapper = document.querySelector('#testPopoverUp').$.popover__wrapper;
+                test('popover stays open after click inside', function() {
+                    document.querySelector('#btnEnhanced').click();
+                    var wrapper = document.querySelector('#testPopoverEnhanced').$.popover__wrapper;
+                    var input = Polymer.dom(wrapper.root).querySelector('input')
                     expect(wrapper.classList.contains('fadeFromHidden')).to.equal(true);
-                });
-
-                test('popover closes again after click outside', function() {
-                    document.querySelector('#testPopoverUp').click();
-                    var wrapper = document.querySelector('#testPopoverUp').$.popover__wrapper;
-                    expect(wrapper.classList.contains('fadeFromHidden')).to.equal(false);
-                });
-
-                test('shows popover when initiated from child', function() {
-                    document.querySelector('#btnChild').click();
-                    var wrapper = document.querySelector('#testPopoverNested').$.popover__wrapper;
+                    input.click();
                     expect(wrapper.classList.contains('fadeFromHidden')).to.equal(true);
                     wrapper.click();
                     expect(wrapper.classList.contains('fadeFromHidden')).to.equal(false);
