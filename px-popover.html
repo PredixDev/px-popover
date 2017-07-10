@@ -229,7 +229,7 @@ Custom property | Description
     _isDescendant: function (parent, child) {
     var node = child.parentNode;
       while (node != null) {
-        if (node === parent) {
+        if (node.root === parent) {
           return true;
         }
         node = node.parentNode;
@@ -242,11 +242,11 @@ Custom property | Description
     _toggle: function (event) {
       // hide the popover if a click is coming from the outside
       if(event.type === 'click') {
-        if( this._isDescendant(this.$.popover__wrapper, event.target) ) {
+        if( this._isDescendant(this.root, event.target) ) {
           return false;
         }
         else {
-          if(event.target.id === this.for) {
+          if(event.currentTarget.id === this.for) {
             if(this._isShowing) {
               this.hide();
             } else {
