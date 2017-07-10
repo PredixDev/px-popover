@@ -171,13 +171,13 @@
                 });
 
                 test('hides popover before click', function() {
-                    var wrapper = document.querySelector('#testPopoverUp').$.popover__wrapper;
+                    var wrapper = document.querySelector('#testPopoverUp #popover__wrapper');
                     expect(wrapper.classList.contains('fadeFromHidden')).to.equal(false);
                 });
 
                 test('shows popover after click', function() {
                     document.querySelector('#btnUp').click();
-                    var wrapper = document.querySelector('#testPopoverUp').$.popover__wrapper;
+                    var wrapper = document.querySelector('#testPopoverUp #popover__wrapper');
                     expect(wrapper.classList.contains('fadeFromHidden')).to.equal(true);
                 });
 
