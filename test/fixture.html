@@ -50,6 +50,16 @@
         </p>
 
         <div class="sample-container">
+            <button id="btnObjectBound" type="button" name="button">Up</button>
+            <div>
+              <px-popover
+                  id="testPopoverObjectBound"
+                  orientation="top"
+                  popover-title="Object-bound Popover"
+                  popover-body="Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod.">
+              </px-popover>
+            </div>
+
             <button id="btnUp" type="button" name="button">Up</button>
             <px-popover
                 id="testPopoverUp"
@@ -173,6 +183,37 @@
                     document.querySelector('#testPopoverUp').click();
                     var wrapper = document.querySelector('#testPopoverUp #popoverWrapper');
                     expect(wrapper.classList.contains('fadeFromHidden')).to.equal(false);
+                });
+
+                suite('binding the for property to an object', function() {
+                    setup(function() {
+                        document.querySelector('#testPopoverObjectBound').for = document.querySelector('#btnObjectBound');
+                    });
+
+                    test('does not allow non-HTMLELement objects to be bound', function() {
+                      var popoverElement = document.querySelector('#testPopoverObjectBound');
+
+                      popoverElement.for = {};
+                      expect(popoverElement._target).to.equal(popoverElement.parentNode);
+
+                    });
+
+                    test('hides popover before click', function() {
+                        var wrapper = document.querySelector('#testPopoverObjectBound #popoverWrapper');
+                        expect(wrapper.classList.contains('fadeFromHidden')).to.equal(false);
+                    });
+
+                    test('shows popover after click', function() {
+                        document.querySelector('#btnObjectBound').click();
+                        var wrapper = document.querySelector('#testPopoverObjectBound #popoverWrapper');
+                        expect(wrapper.classList.contains('fadeFromHidden')).to.equal(true);
+                    });
+
+                    test('popover closes again after click outside', function() {
+                        document.querySelector('#testPopoverObjectBound').click();
+                        var wrapper = document.querySelector('#testPopoverObjectBound #popoverWrapper');
+                        expect(wrapper.classList.contains('fadeFromHidden')).to.equal(false);
+                    });
                 });
 
                 // test('top popover has correct vertical position', function(done) {
