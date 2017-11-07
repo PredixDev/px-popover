@@ -184,7 +184,7 @@ Custom property | Description | Default
 
           if(this.for && typeof(this.for) === 'string') {
             target = Polymer.dom(parentNode).querySelector('#' + this.for);
-          }else if(this.for && typeof(this.for) === 'object') {
+          }else if(this.for && this.for instanceof HTMLElement) {
             target = this.for;
           }
           //DOCUMENT_FRAGMENT_NODE
@@ -270,7 +270,8 @@ Custom property | Description | Default
                 if( this._isDescendant(this.$.popoverWrapper, event.target) ) {
                     return false;
                 } else {
-                    if(event.target.id === this.for) {
+                    if ((typeof (this.for) === 'string' && event.target.id === this.for) ||
+                        (this.for instanceof HTMLElement && event.target.id === this.for.id)) {
                         if(this._isShowing) {
                             this.hide();
                         } else {
