@@ -27,23 +27,29 @@ $popover-border-color: var(--px-popover-border-color, black);
 $popover-text-color: var(--px-popover-text-color, black);
 $popover-shadow-color: var(--px-popover-shadow-color, black);
 $popover-max-width: var(--px-popover-max-width, 300px);
+$popover-padding: var(--px-popover-padding, 20px);
+$popover-z-index: var(--px-popover-z-index, 103);
 $carat-size: 7.5px;
 
+#dropdown {
+	z-index: $popover-z-index;
+}
+
 #popover {
-  outline: none;
-  padding: 20px;
-  max-width: $popover-max-width;
-  border: 1px solid $popover-border-color;
-  background: $popover-background-color;
-  color: $popover-text-color;
-  box-shadow: 0px 1px 3px 0px $popover-shadow-color;
-  h5 {
-    margin: 0px 0px 20px 0px;
-  }
-  p {
-    margin: 0;
-    word-wrap: break-word;
-  }
+	outline: none;
+	padding: $popover-padding;
+	max-width: $popover-max-width;
+	border: 1px solid $popover-border-color;
+	background: $popover-background-color;
+	color: $popover-text-color;
+	box-shadow: 0px 1px 3px 0px $popover-shadow-color;
+	h5 {
+		margin: 0px 0px 20px 0px;
+	}
+	p {
+		margin: 0;
+		word-wrap: break-word;
+	}
 }
 //carat on the left
 #popover.right:after, #popover.right:before {
